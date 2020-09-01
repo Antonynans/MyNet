@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,3 +134,14 @@ LOGOUT_REDIRECT_URL = 'home'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+STATIC_ENV_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_env')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+STATIC_ROOT = os.path.join(STATIC_ENV_ROOT, 'static')
+MEDIA_ROOT = os.path.join(STATIC_ENV_ROOT, 'media')
+
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
