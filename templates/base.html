@@ -40,6 +40,8 @@ href="{% url 'password_change'%}">Change password</a>
 <div class="dropdown-divider"></div>
 <a class="dropdown-item" href="{% url 'logout' %}">
 Log Out</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="profiles">Profile</a>
 </div>
 </li>
 </ul>
@@ -55,8 +57,17 @@ Sign up</a>
 </nav>
 <div class="container">
 {% block content %}
+{% include "layouts/navbar.html" %}
+  {% if messages %}
+  {% include "layouts/alert.html" %}
+  {% endif %}
+  <div class="container my-5">
+    <p class="lead">Contents not found...!</p>
+  </div>
+  {% include "layouts/footer.html" %}
 {% endblock content %}
 </div>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

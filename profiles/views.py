@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.urls import reverse
 from django.views.generic import (
@@ -39,10 +39,11 @@ class CheckAuthProfileMixin(object):
 
 
 # PROFILE LIST VIEW
-class ProfileListView(ListView):
+class ProfileListView(LoginRequiredMixin, ListView):
   queryset = Profile.objects.all()
   context_object_name = 'profiles'
   template_name = 'profiles/profile_list.html'
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(ProfileListView, self).get_context_data(*args, **kwargs)
@@ -110,7 +111,7 @@ class ProfileUpdateView(
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Profile has been updated successfully!')
     return reverse(
-      'profiles:profiles-detail', kwargs={'id': self.get_object().pk}
+      'profiles:profiles_detail', kwargs={'id': self.get_object().pk}
     )
 
 
@@ -132,7 +133,7 @@ class ProfileDeleteView(
   
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Profile has been deleted successfully!')
-    return reverse('profiles:profiles-list')
+    return reverse('profiles:profiles_list')
 
 
 #######################EDUCATION VIEWS##################################
@@ -180,6 +181,7 @@ class EducationDetailView(
   queryset = Education.objects.all()
   context_object_name = 'edu'
   template_name = 'educations/education_detail.html'
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(EducationDetailView, self).get_context_data(*args, **kwargs)
@@ -197,6 +199,7 @@ class EducationUpdateView(
   context_object_name = 'edu'
   template_name = 'educations/education_update.html'
   form_class = EducationForm
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(EducationUpdateView, self).get_context_data(*args, **kwargs)
@@ -206,7 +209,7 @@ class EducationUpdateView(
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Education has been successfully updated!')
     return reverse(
-      'profiles:educations-detail',
+      'profiles:educations_detail',
       kwargs={
         'profile_id': self.kwargs.get('profile_id'),
         'education_id': self.kwargs.get('education_id')
@@ -223,6 +226,7 @@ class EducationDeleteView(
   queryset = Education.objects.all()
   context_object_name = 'edu'
   template_name = 'educations/education_delete.html'
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(EducationDeleteView, self).get_context_data(*args, **kwargs)
@@ -232,7 +236,7 @@ class EducationDeleteView(
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Education has been successfully deleted!')
     return reverse(
-      'profiles:educations-list',
+      'profiles:educations_list',
       kwargs={
         'id': self.kwargs.get('profile_id'),
       }
@@ -248,6 +252,7 @@ class EducationCreateView(
   queryset = Education.objects.all()
   template_name = 'educations/education_create.html'
   form_class = EducationForm
+  login_url = 'login'
 
   def form_valid(self, form):
     if self.get_object():
@@ -270,6 +275,7 @@ class ExperienceProfileObjectMixin(object):
   model = Experience
   profile_lookup = 'profile_id'
   experience_lookup = 'experience_id'
+  login_url = 'login'
 
   def get_object(self, *args, **kwargs):
     return self.model.objects.get_profile_experience(
@@ -283,6 +289,7 @@ class ExperienceListView(LoginRequiredMixin, ProfileObjectMixin, ListView):
   queryset = Experience.objects.all()
   context_object_name = 'experiences'
   template_name = 'experiences/experience_list.html'
+  login_url = 'login'
 
   def get_queryset(self, *args, **kwargs):
     return Experience.objects.filter(profile=self.get_object().pk)
@@ -299,6 +306,7 @@ class ExperienceCreateView(LoginRequiredMixin, ProfileObjectMixin, CreateView):
   queryset = Experience.objects.all()
   template_name = 'experiences/experience_create.html'
   form_class = ExperienceForm
+  login_url = 'login'
 
   def form_valid(self, form, *args, **kwargs):
     if self.get_object():
@@ -322,6 +330,7 @@ class ExperienceDetailView(
   queryset = Experience.objects.all()
   context_object_name = 'exp'
   template_name = 'experiences/experience_detail.html'
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(ExperienceDetailView, self).get_context_data(*args, **kwargs)
@@ -339,6 +348,7 @@ class ExperienceUpdateView(
   context_object_name = 'exp'
   template_name = 'experiences/experience_update.html'
   form_class = ExperienceForm
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(ExperienceUpdateView, self).get_context_data(*args, **kwargs)
@@ -348,7 +358,7 @@ class ExperienceUpdateView(
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Experience has been successfully updated!')
     return reverse(
-      'profiles:experiences-detail',
+      'profiles:experiences_detail',
       kwargs={
         'profile_id': self.kwargs.get('profile_id'),
         'experience_id': self.kwargs.get('experience_id')
@@ -365,6 +375,7 @@ class ExperienceDeleteView(
   queryset = Experience.objects.all()
   context_object_name = 'exp'
   template_name = 'experiences/experience_delete.html'
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(ExperienceDeleteView, self).get_context_data(*args, **kwargs)
@@ -374,7 +385,7 @@ class ExperienceDeleteView(
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Experience has been successfully deleted!')
     return reverse(
-      'profiles:experiences-list',
+      'profiles:experiences_list',
       kwargs={
         'id': self.kwargs.get('profile_id'),
       }
@@ -397,6 +408,7 @@ class SocialCreateView(LoginRequiredMixin, ProfileObjectMixin, CreateView):
   queryset = Social.objects.all()
   template_name = 'socials/social_create.html'
   form_class = SocialForm
+  login_url = 'login'
 
   def form_valid(self, form, *args, **kwargs):
     form.instance.profile = self.get_object()
@@ -416,6 +428,7 @@ class SocialDetailView(LoginRequiredMixin, SocialObjectMixin, DetailView):
   queryset = Social.objects.all()
   context_object_name = 'social'
   template_name = 'socials/social_detail.html'
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(SocialDetailView, self).get_context_data(*args, **kwargs)
@@ -433,6 +446,8 @@ class SocialUpdateView(
   context_object_name = 'social'
   template_name = 'socials/social_update.html'
   form_class = SocialForm
+  login_url = 'login'
+
 
   def get_context_data(self, *args, **kwargs):
     context = super(SocialUpdateView, self).get_context_data(*args, **kwargs)
@@ -442,7 +457,7 @@ class SocialUpdateView(
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, 'Social page has been successfully updated!')
     return reverse(
-      'profiles:socials-detail',
+      'profiles:socials_detail',
       kwargs={'id': self.get_object().profile.pk}
     )
 
@@ -456,6 +471,7 @@ class SocialDeleteView(
   queryset = Social.objects.all()
   context_object_name = 'social'
   template_name = 'socials/social_delete.html'
+  login_url = 'login'
 
   def get_context_data(self, *args, **kwargs):
     context = super(SocialDeleteView, self).get_context_data(*args, **kwargs)
@@ -465,7 +481,7 @@ class SocialDeleteView(
   def get_success_url(self, *args, **kwargs):
     messages.success(self.request, "Social page has been successfully deleted! Let's create one")
     return reverse(
-      'profiles:socials-create',
+      'profiles:socials_create',
       kwargs={
         'id': self.kwargs.get('id'),
       }

@@ -83,7 +83,7 @@ class Profile(models.Model):
   )
   location = models.CharField(max_length=100, default='USA')
   skills = models.CharField(max_length=120, choices=None)
-  bio = models.TextField(blank=True, default='Hello buddies..!')
+  bio = models.TextField(blank=True)
   image = models.ImageField(
     upload_to='profiles/',
     default='default.jpg',
@@ -98,34 +98,34 @@ class Profile(models.Model):
     return self.name
 
   def get_absolute_url(self, *args, **kwargs):
-    return reverse('profiles:profiles-detail', kwargs={'id':self.pk})
+    return reverse('profiles:profiles_detail', kwargs={'id':self.pk})
 
   def get_create_url(self, *args, **kwargs):
-    return reverse('profiles:profiles-create')
+    return reverse('profiles:profiles_create')
   
   def get_update_url(self, *args, **kwargs):
-    return reverse('profiles:profiles-update', kwargs={'id':self.pk})
+    return reverse('profiles:profiles_update', kwargs={'id':self.pk})
 
   def get_delete_url(self, *args, **kwargs):
-    return reverse('profiles:profiles-delete', kwargs={'id':self.pk})
+    return reverse('profiles:profiles_delete', kwargs={'id':self.pk})
 
   def get_education_url(self, *args, **kwargs):
-    return reverse('profiles:educations-list', kwargs={'id':self.pk})
+    return reverse('profiles:educations_list', kwargs={'id':self.pk})
 
   def get_experience_url(self, *args, **kwargs):
-    return reverse('profiles:experiences-list', kwargs={'id':self.pk})
+    return reverse('profiles:experiences_list', kwargs={'id':self.pk})
 
   def get_education_create_url(self, *args, **kwargs):
-    return reverse('profiles:educations-create', kwargs={'id':self.pk})
+    return reverse('profiles:educations_create', kwargs={'id':self.pk})
   
   def get_experience_create_url(self, *args, **kwargs):
-    return reverse('profiles:experiences-create', kwargs={'id':self.pk})
+    return reverse('profiles:experiences_create', kwargs={'id':self.pk})
   
   def get_social_url(self, *args, **kwargs):
     return reverse('profiles:socials', kwargs={'id':self.pk})
 
   def get_social_create_url(self, *args, **kwargs):
-    return reverse('profiles:socials-create', kwargs={'id':self.pk})
+    return reverse('profiles:socials_create', kwargs={'id':self.pk})
   
 
 # EDUCATION MODEL MANAGER
@@ -241,10 +241,10 @@ class Social(models.Model):
     return self.profile.name
 
   def get_absolute_url(self, *args, **kwargs):
-    return reverse('profiles:socials-detail', kwargs={'id': self.profile.pk})
+    return reverse('profiles:socials_detail', kwargs={'id': self.profile.pk})
   
   def get_update_url(self, *args, **kwargs):
-    return reverse('profiles:socials-update', kwargs={'id': self.profile.pk})
+    return reverse('profiles:socials_update', kwargs={'id': self.profile.pk})
 
   def get_delete_url(self, *args, **kwargs):
-    return reverse('profiles:socials-delete', kwargs={'id': self.profile.pk})
+    return reverse('profiles:socials_delete', kwargs={'id': self.profile.pk})

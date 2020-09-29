@@ -127,7 +127,7 @@ class ProfileForm(forms.ModelForm):
     widget=forms.Textarea(
       attrs={
         'class': 'form-control form-control-lg',
-        'placeholder': 'Enter Country',
+        'placeholder': 'Tell us something about you',
         'rows': 4
       }
     )
@@ -149,7 +149,7 @@ class ProfileForm(forms.ModelForm):
   def clean_age(self, *args, **kwargs):
     age = self.cleaned_data.get('age')
     if age > 50:
-      raise forms.ValidationError('Age must be belove 50 years!')
+      raise forms.ValidationError('Age must be below 50 years!')
     elif age < 18:
       raise forms.ValidationError('Age must be at least 18 years!')
     else:
@@ -177,7 +177,8 @@ class EducationForm(forms.ModelForm):
 
   started_at = forms.DateField(
     widget=forms.DateInput(
-      attrs={
+      attrs={'placeholder': 'Initial date...', 'type': 'text',
+                   'onfocus': "(this.type='date')",
         'class': 'form-control form-control-lg',
       }
     )
@@ -186,7 +187,8 @@ class EducationForm(forms.ModelForm):
   ended_at = forms.DateField(
     required=False,
     widget=forms.DateInput(
-      attrs={
+      attrs={'placeholder': 'Initial date...', 'type': 'text',
+                   'onfocus': "(this.type='date')",
         'class': 'form-control form-control-lg',
       }
     )
@@ -227,7 +229,8 @@ class ExperienceForm(forms.ModelForm):
 
   started_at = forms.DateField(
     widget=forms.DateInput(
-      attrs={
+      attrs={'placeholder': 'Enter date...', 'type': 'text',
+                   'onfocus': "(this.type='date')",
         'class': 'form-control form-control-lg',
       }
     )
@@ -236,7 +239,8 @@ class ExperienceForm(forms.ModelForm):
   ended_at = forms.DateField(
     required=False,
     widget=forms.DateInput(
-      attrs={
+      attrs={'placeholder': 'Enter date...', 'type': 'text',
+                   'onfocus': "(this.type='date')",
         'class': 'form-control form-control-lg',
       }
     )

@@ -26,97 +26,97 @@ urlpatterns = [
     path(
         '',
         ProfileListView.as_view(),
-        name='profiles-list'
+        name='profiles_list'
     ),
     path(
         'create/',
         ProfileCreateView.as_view(),
-        name='profiles-create'
+        name='profiles_create'
     ),
     path(
         '<int:id>/detail/',
         ProfileDetailView.as_view(),
-        name='profiles-detail'
+        name='profiles_detail'
     ),
     path(
         '<int:id>/delete/',
         ProfileDeleteView.as_view(),
-        name='profiles-delete'
+        name='profiles_delete'
     ),
     path(
         '<int:id>/update/',
         ProfileUpdateView.as_view(),
-        name='profiles-update'
+        name='profiles_update'
     ),
     path(
         '<int:id>/educations/',
         EducationListView.as_view(),
-        name='educations-list'
+        name='educations_list'
     ),
     path(
         '<int:id>/experiences/',
         ExperienceListView.as_view(),
-        name='experiences-list'
+        name='experiences_list'
     ),
     path(
         '<int:id>/educations/create',
         EducationCreateView.as_view(),
-        name='educations-create'
+        name='educations_create'
     ),
     path(
         '<int:id>/experiences/create',
         ExperienceCreateView.as_view(),
-        name='experiences-create'
+        name='experiences_create'
     ),
     path(
         '<int:id>/socials',
         SocialDetailView.as_view(),
-        name='socials-detail'
+        name='socials_detail'
     ),
     path(
         '<int:id>/socials/create',
         SocialCreateView.as_view(),
-        name='socials-create'
+        name='socials_create'
     ),
     path(
         '<int:id>/socials/update',
         SocialUpdateView.as_view(),
-        name='socials-update'
+        name='socials_update'
     ),
     path(
         '<int:id>/socials/delete',
         SocialDeleteView.as_view(),
-        name='socials-delete'
+        name='socials_delete'
     ),
     path(
         '<int:profile_id>/educations/<int:education_id>/detail',
         EducationDetailView.as_view(),
-        name='educations-detail'
+        name='educations_detail'
     ),
     path(
         '<int:profile_id>/experiences/<int:experience_id>/detail',
         ExperienceDetailView.as_view(),
-        name='experiences-detail'
+        name='experiences_detail'
     ),
     path(
         '<int:profile_id>/educations/<int:education_id>/update',
         EducationUpdateView.as_view(),
-        name='educations-update'
+        name='educations_update'
     ),
     path(
         '<int:profile_id>/experiences/<int:experience_id>/update',
         ExperienceUpdateView.as_view(),
-        name='experiences-update'
+        name='experiences_update'
     ),
     path(
         '<int:profile_id>/educations/<int:education_id>/delete',
         EducationDeleteView.as_view(),
-        name='educations-delete'
+        name='educations_delete'
     ),
     path(
         '<int:profile_id>/experiences/<int:experience_id>/delete',
         ExperienceDeleteView.as_view(),
-        name='experiences-delete'
+        name='experiences_delete'
     ),
 ]
 
